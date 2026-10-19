@@ -1,0 +1,341 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080d19">
+
+  <meta
+    name="description"
+    content="Check live weather, temperature, digital clock, date and 7-day weather forecast."
+  >
+  <meta name="author" content="Atmos">
+
+  <title>Atmos — Weather &amp; Time</title>
+
+  <!-- Website Favicon -->
+  <link
+    rel="icon"
+    type="image/jpeg"
+    href="./favicons/favicon.jpg"
+  >
+
+  <!-- Optional PNG favicon for modern browsers -->
+  <link
+    rel="icon"
+    type="image/png"
+    href="./favicons/favicon.png"
+  >
+
+  <!-- Optional iPhone Home Screen Icon -->
+  <link
+    rel="apple-touch-icon"
+    href="./favicons/favicon.png"
+  >
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link
+    rel="preconnect"
+    href="https://fonts.gstatic.com"
+    crossorigin
+  >
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="./style.css">
+
+  <!-- JavaScript -->
+  <script src="./script.js" defer></script>
+</head>
+
+<body>
+  <div class="ambient ambient-one"></div>
+  <div class="ambient ambient-two"></div>
+
+  <main class="app">
+
+    <!-- Header -->
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="Atmos home">
+        <span class="brand-icon">✳</span>
+        <span>atmos<span class="brand-dot">.</span></span>
+      </a>
+
+      <div class="top-actions">
+        <span class="live-status">
+          <span></span>
+          LIVE WEATHER
+        </span>
+
+        <button
+          class="icon-button"
+          id="unitToggle"
+          type="button"
+          aria-label="Toggle temperature units"
+        >
+          °C
+        </button>
+
+        <button
+          class="icon-button"
+          id="themeToggle"
+          type="button"
+          aria-label="Toggle light and dark mode"
+        >
+          ☼
+        </button>
+      </div>
+    </header>
+
+    <!-- Intro -->
+    <section class="intro">
+      <p class="eyebrow">YOUR DAILY WEATHER COMPANION</p>
+
+      <h1>
+        Feel the <span>atmosphere.</span>
+      </h1>
+
+      <p class="subtitle">
+        Weather, time and everything happening outside.
+      </p>
+    </section>
+
+    <!-- City Search -->
+    <section class="search-section" aria-label="Search for a city">
+      <form id="searchForm" class="search-box">
+        <span class="search-icon" aria-hidden="true">⌕</span>
+
+        <input
+          id="cityInput"
+          type="search"
+          placeholder="Search city, e.g. Dhaka, London..."
+          autocomplete="off"
+          aria-label="City name"
+          required
+          minlength="2"
+        >
+
+        <button class="search-button" type="submit">
+          Search <span>↗</span>
+        </button>
+      </form>
+
+      <div
+        id="searchResults"
+        class="search-results"
+        hidden
+      ></div>
+
+      <div class="search-footer">
+        <span id="statusMessage" role="status">
+          Loading weather data...
+        </span>
+
+        <button
+          id="locationButton"
+          class="text-button"
+          type="button"
+        >
+          ◎ Use my location
+        </button>
+      </div>
+    </section>
+
+    <!-- Dashboard -->
+    <section class="dashboard">
+
+      <!-- Current Weather -->
+      <article class="weather-card glass">
+        <div class="card-heading">
+          <div>
+            <p class="eyebrow">CURRENT WEATHER</p>
+
+            <h2 id="locationName">
+              Sherpur, Bangladesh
+            </h2>
+
+            <p id="locationDetails" class="muted">
+              Mymensingh Division
+            </p>
+          </div>
+
+          <span id="weatherBadge" class="weather-badge">
+            LIVE
+          </span>
+        </div>
+
+        <div class="current-weather">
+          <div class="temperature-wrap">
+            <p
+              id="weatherDescription"
+              class="weather-description"
+            >
+              Getting weather...
+            </p>
+
+            <div class="temperature-line">
+              <span id="temperature" class="temperature">--</span>
+
+              <span
+                id="temperatureUnit"
+                class="temperature-unit"
+              >
+                °C
+              </span>
+            </div>
+
+            <p class="feels-like">
+              Feels like
+              <strong id="feelsLike">--°</strong>
+            </p>
+
+            <p id="highLow" class="high-low">
+              H: --° &nbsp; L: --°
+            </p>
+          </div>
+
+          <div
+            class="weather-art"
+            id="weatherArt"
+            aria-hidden="true"
+          >
+            🌤️
+          </div>
+        </div>
+
+        <div class="weather-divider"></div>
+
+        <!-- Weather Metrics -->
+        <div class="weather-metrics">
+          <div class="metric">
+            <span class="metric-icon">💧</span>
+            <div>
+              <p>Humidity</p>
+              <strong id="humidity">--%</strong>
+            </div>
+          </div>
+
+          <div class="metric">
+            <span class="metric-icon">〰</span>
+            <div>
+              <p>Wind speed</p>
+              <strong id="windSpeed">-- km/h</strong>
+            </div>
+          </div>
+
+          <div class="metric">
+            <span class="metric-icon">☔</span>
+            <div>
+              <p>Rain chance</p>
+              <strong id="rainChance">--%</strong>
+            </div>
+          </div>
+
+          <div class="metric">
+            <span class="metric-icon">🌡</span>
+            <div>
+              <p>Feels like</p>
+              <strong id="feelsMetric">--°C</strong>
+            </div>
+          </div>
+        </div>
+
+        <p class="updated-at" id="updatedAt">
+          Weather data loading...
+        </p>
+      </article>
+
+      <!-- Clock and Date -->
+      <article class="clock-card glass">
+        <div class="card-heading">
+          <div>
+            <p class="eyebrow">YOUR LOCAL TIME</p>
+            <h2>Time &amp; Date</h2>
+          </div>
+
+          <span class="clock-symbol">◷</span>
+        </div>
+
+        <div class="clock-display">
+          <div id="clock" class="clock">--:--:--</div>
+          <span id="ampm" class="ampm">AM</span>
+        </div>
+
+        <p id="date" class="date-display">
+          Loading date...
+        </p>
+
+        <div class="clock-divider"></div>
+
+        <div class="timezone-row">
+          <span class="timezone-icon">🌐</span>
+
+          <div>
+            <p class="muted">Selected city timezone</p>
+            <strong id="timezone">Asia/Dhaka</strong>
+          </div>
+        </div>
+
+        <p class="clock-note">
+          Clock updates every second using the selected city's time zone.
+        </p>
+      </article>
+
+    </section>
+
+    <!-- Seven-Day Forecast -->
+    <section class="forecast-section">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">PLAN AHEAD</p>
+          <h2>7-day forecast</h2>
+        </div>
+
+        <span class="forecast-label">NEXT 7 DAYS</span>
+      </div>
+
+      <div
+        id="forecast"
+        class="forecast-grid"
+        aria-live="polite"
+      >
+        <div class="forecast-loading">
+          Loading the forecast...
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <a class="brand footer-brand" href="#">
+        <span class="brand-icon">✳</span>
+        <span>atmos<span class="brand-dot">.</span></span>
+      </a>
+
+      <p>
+        Weather data by
+        <a
+          href="https://open-meteo.com/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Open-Meteo
+        </a>
+      </p>
+
+      <p>Made for your everyday.</p>
+    </footer>
+
+  </main>
+
+  <noscript>
+    This app needs JavaScript enabled to display live weather and time.
+  </noscript>
+</body>
+</html>
